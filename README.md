@@ -1,0 +1,2 @@
+# ObservingConditions
+amateur astronomy service
