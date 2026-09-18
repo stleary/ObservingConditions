@@ -23,6 +23,8 @@ Clone the repo to your laptop, build it once, then commit to GitHub
 *cd ObservingConditions*  
 *gradle init 		\# allow creation in a non-empty folder, then accept all default values.*  
 *./gradlew build 	\# this is a sanity check, that everything is set up and working*  
+*\# Important\! You have to tell .gitignore to store the gradle-wrapper.jar file in the repo*  
+*\# Add this line to .gitignore: \!gradle/wrapper/gradle-wrapper.jar*  
 *git add .*  
 *git commit \-m "main initial commit"*  
 *git push 		\# Keep the repo in sync with the code*
@@ -51,11 +53,11 @@ From here on out, we will only use `./gradlew`, never `gradle`.
 
 Create `MoonPhaseCalculatorBasicTest` and write one test against a real new-moon date:
 
-@Test  
-void knownNewMoonIsIdentifiedAsNew() {  
-    MoonPhaseCalculator calculator \= new MoonPhaseCalculator();  
-    assertTrue(calculator.isNewMoon([LocalDate.of](http://LocalDate.of)("2026", "9", "10")));  
-}
+*@Test*  
+*void knownNewMoonIsIdentifiedAsNew() {*  
+    *MoonPhaseCalculator calculator \= new MoonPhaseCalculator();*  
+    *assertTrue(calculator.isNewMoon(LocalDate.of(2026, 9, 10)));*  
+*}*
 
 Execute *./gradlew test*  
    
@@ -82,7 +84,7 @@ Bring over dates from 2026 and 2027\. For example,
 
 ## Step 3 Make the test pass, crudely
 
-Create a new class, MoonPhaseCalculatorBasic, that extends MoonPhaseCalculator. Give it a private static ArrayList of the date strings from your data source, using this format: "2026-09-10", …
+Create a new class, MoonPhaseCalculatorBasic, that extends MoonPhaseCalculator. Include a private static final List of the date strings from your data source, using this format: "2026-09-10", …
 
 Override the isNewMoon() method and check whether the incoming date is in your list. Return true if it is found, otherwise return false.
 
