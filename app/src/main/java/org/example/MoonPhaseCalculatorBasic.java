@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Calculates phases of the moon for a given date in a very basic and limited way
  */
-public class MoonPhaseCalculatorBasic extends MoonPhaseCalculator {
+public class MoonPhaseCalculatorBasic implements MoonPhaseCalculator {
 
     private static final String[] newMoonDates = {
         "2026-01-17", "2026-02-16", "2026-03-18", "2026-04-16", "2026-05-16",
