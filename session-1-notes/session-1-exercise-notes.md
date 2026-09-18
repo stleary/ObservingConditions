@@ -2,7 +2,7 @@
 
 **Goal of this lesson:** Create a Git repo containing a Gradle build, a wrapper, one deliberately failing test, and the crudest code that makes it pass.
 
-**Not a goal:** correct moon phases. The approximation is supposed to be wrong at the edges. It will be fixed in future lessons.
+**Not a goal:** complete check for moon phases. We only need a sample of test data at this time. This will be fixed in future lessons.
 
 ---
 
@@ -21,7 +21,8 @@ Create a new GitHub project (ObservingConditions or similar). Make it public and
 Clone the repo to your laptop, build it once, then commit to GitHub  
 *git clone \<get your GitHub URL by clicking the Code button\>*  
 *cd ObservingConditions*  
-*gradle init 		\# allow creation in a non-empty folder, then accept all default values.*  
+*gradle init 		\# allow creation in a non-empty folder, then accept all default values.*   
+                                   *\# Your choice whether to use Groovy or Kotlin*  
 *./gradlew build 	\# this is a sanity check, that everything is set up and working*  
 *\# Important\! You have to tell .gitignore to store the gradle-wrapper.jar file in the repo*  
 *\# Add this line to .gitignore: \!gradle/wrapper/gradle-wrapper.jar*  
@@ -39,7 +40,7 @@ Clone the repo to your laptop, build it once, then commit to GitHub
   - Creates a standard lifecycle with compile/test/package steps (continuous integration)  
 - **`plugins` vs `dependencies`.** One extends the build tool; the other is code the program uses. New developers tend to conflate these.  
 - **`testImplementation`.** JUnit isn't shipped to production. What would happen if `implementation` was used instead?  
-- **The three coordinates.** `group:name:version`. This is the same addressing scheme behind every Gradle dependency. Group: the company name. Name: the app name. Version: the release version.  
+- **The three coordinates.** `group:name:version`. This is the same addressing scheme behind every Gradle dependency. Group: the company name. Name: the app name. Version: the release version. Note: This appears only in the Groovy *build.gradle*. For Kotlin, you must look in *gradle/libs.versions.toml*  
 - **`mavenCentral()` in a Gradle file.** Note that Central refers to a repository, but Maven is just another build tool. Gradle only uses the former, and ignores the latter.
 
 **Why we commit a script (gradlew) whose only job is to download a build tool (gradle).** Anyone who clones this builds it with the *same* Gradle version, having installed nothing. This means that anyone can recreate your build with the same Gradle software versions you used.
@@ -118,7 +119,7 @@ Finally, update your test to create a MoonPhaseCalculatorBasic, and execute the 
 
 - You probably have not used *LocalDate* yet. Dates and times are problematic in Java, and in most other programming languages. It gets complicated quickly, so you only need to learn enough to solve the current problem.  
 - We use a base class that does nothing except throw an exception. This is to notify us if we ever accidentally create the wrong object in a test. The *MoonPhaseCalculatorBasic* class is our first implementation that actually checks the date and returns a result. We will derive another class later, which will find a better way to find the new Moon.  
-- Could you implement the base class as an interface? You can\! This works better because it makes it clear to the developer that we are not actually implementing anything in this class. Try it and see.
+- Could you implement the base class as an interface? You can\! This works better because it makes it clear to the developer that we are not actually implementing anything in this class. Try it and see. Notice that the error of creating an instance of the interface is now a compile-time error, instead of a run-time exception. Letting errors like this found at compile time instead of test time is a valid design choice. 
 
 ---
 
@@ -136,4 +137,8 @@ By now you should be able to say, unprompted:
 - what happens if a dependency is declared `testImplementation` instead of `implementation`  
 - why the test was written before the class existed
 
->   
+## Homework
+
+1. Add some tests with invalid new Moon dates, and make sure they fail.  
+2. Try a valid 2028 date, and observe the test fail (it will always return false)
+
