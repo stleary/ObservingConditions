@@ -19,16 +19,17 @@ You will need these tools and accounts:
 Create a new GitHub project (ObservingConditions or similar). Make it public and select options to include a readme, .gitignore for Java, and a license (MIT recommended)
 
 Clone the repo to your laptop, build it once, then commit to GitHub  
-*git clone \<get your GitHub URL by clicking the Code button\>*  
-*cd ObservingConditions*  
-*gradle init 		\# allow creation in a non-empty folder, then accept all default values.*   
-                                   *\# Your choice whether to use Groovy or Kotlin*  
-*./gradlew build 	\# this is a sanity check, that everything is set up and working*  
-*\# Important\! You have to tell .gitignore to store the gradle-wrapper.jar file in the repo*  
-*\# Add this line to .gitignore: \!gradle/wrapper/gradle-wrapper.jar*  
-*git add .*  
-*git commit \-m "main initial commit"*  
-*git push 		\# Keep the repo in sync with the code*
+
+git clone \<get your GitHub URL by clicking the Code button\>
+cd ObservingConditions
+gradle init 		\# allow creation in a non-empty folder, then accept all default values.
+                \# Your choice whether to use Groovy or Kotlin
+./gradlew build \# this is a sanity check, that everything is set up and working
+\# Important\! You have to tell .gitignore to store the gradle-wrapper.jar file in the repo
+\# Add this line to .gitignore: \!gradle/wrapper/gradle-wrapper.jar
+git add .  
+git commit \-m "main initial commit"
+git push 		\# Keep the repo in sync with the code
 
 ---
 
