@@ -60,8 +60,8 @@ void knownNewMoonIsIdentifiedAsNew() {
     MoonPhaseCalculator calculator \= new MoonPhaseCalculator();  
     assertTrue(calculator.isNewMoon(LocalDate.of(2026, 9, 10)));
 }
-
-Execute *./gradlew test*  
+```
+Execute ```./gradlew test ``` 
    
 It won't compile because `MoonPhaseCalculator` doesn't exist. A compilation failure is a legitimate red. The unit test drives the class into existence along with its method signature. You have just designed an API before implementing it.
 
