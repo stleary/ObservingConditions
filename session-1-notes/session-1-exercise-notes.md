@@ -19,27 +19,18 @@ You will need these tools and accounts:
 Create a new GitHub project (ObservingConditions or similar). Make it public and select options to include a readme, .gitignore for Java, and a license (MIT recommended)
 
 Clone the repo to your laptop, build it once, then commit to GitHub  
-
+```
 git clone \<get your GitHub URL by clicking the Code button\>
-
 cd ObservingConditions
-
 gradle init 		\# allow creation in a non-empty folder, then accept all default values.
-
                 \# Your choice whether to use Groovy or Kotlin
-
 ./gradlew build \# this is a sanity check, that everything is set up and working
-
 \# Important\! You have to tell .gitignore to store the gradle-wrapper.jar file in the repo
-
 \# Add this line to .gitignore: \!gradle/wrapper/gradle-wrapper.jar
-
 git add .  
-
 git commit \-m "main initial commit"
-
 git push 		\# Keep the repo in sync with the code
-
+```
 ---
 
 **Some things to notice about build.gradle:**
@@ -63,12 +54,12 @@ From here on out, we will only use `./gradlew`, never `gradle`.
 **Do this before you write any actual code.**
 
 Create `MoonPhaseCalculatorBasicTest` and write one test against a real new-moon date:
-
-*@Test*  
-*void knownNewMoonIsIdentifiedAsNew() {*  
-    *MoonPhaseCalculator calculator \= new MoonPhaseCalculator();*  
-    *assertTrue(calculator.isNewMoon(LocalDate.of(2026, 9, 10)));*  
-*}*
+```
+@Test 
+void knownNewMoonIsIdentifiedAsNew() {
+    MoonPhaseCalculator calculator \= new MoonPhaseCalculator();  
+    assertTrue(calculator.isNewMoon(LocalDate.of(2026, 9, 10)));
+}
 
 Execute *./gradlew test*  
    
@@ -100,6 +91,7 @@ Create a new class, MoonPhaseCalculatorBasic, that extends MoonPhaseCalculator. 
 Override the isNewMoon() method and check whether the incoming date is in your list. Return true if it is found, otherwise return false.
 
 Roughly where they should land:  
+```
 public class MoonPhaseCalculatorBasic extends MoonPhaseCalculator {
 
     private static final String\[\] newMoonDates \= {
@@ -122,7 +114,7 @@ public class MoonPhaseCalculatorBasic extends MoonPhaseCalculator {
         return result;
     }
 }
-
+```
 Finally, update your test to create a MoonPhaseCalculatorBasic, and execute the build again.
 
 **Understanding the MoonPhaseCalculator classes:**
