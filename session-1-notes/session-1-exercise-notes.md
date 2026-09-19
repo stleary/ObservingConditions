@@ -57,7 +57,7 @@ Create `MoonPhaseCalculatorBasicTest` and write one test against a real new-moon
 ```
 @Test 
 void knownNewMoonIsIdentifiedAsNew() {
-    MoonPhaseCalculator calculator \= new MoonPhaseCalculator();  
+    MoonPhaseCalculator calculator = new MoonPhaseCalculator();  
     assertTrue(calculator.isNewMoon(LocalDate.of(2026, 9, 10)));
 }
 ```
