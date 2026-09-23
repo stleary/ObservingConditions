@@ -6,12 +6,8 @@
 
 ## Warm up
 
-Open last session's code and explain it back, out loud, without reading ahead:
-
-- What does `MoonPhaseCalculatorBasic.isNewMoon()` do when the date isn't in the list?  
-- Why is `MoonPhaseCalculator` an interface rather than a class?
-
-Then run `./gradlew test` and confirm no errors before changing anything. Starting from a known state is a good habit.
+Run `./gradlew test` and confirm no errors before changing anything. Starting from a known state is a good habit.
+Commit and push your code to GitHub, if you have not done this already.
 
 ---
 
@@ -110,8 +106,6 @@ A few rules to notice in this example:
 * The fields are `final`. Every part of the program shares the same `DELIVERED` object, so its data should never change.
 
 ## **Enums in switch**
-
-TBD: try in code
 
 Enums and `switch` work well together. Inside the `case` labels you write just the value name, without the type prefix.
 
