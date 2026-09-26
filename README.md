@@ -38,3 +38,9 @@ Docker
 Availability  
 Reactive elements
 
+### Phases of the Moon ###
+
+<img width="628" height="395" alt="Screenshot 2026-09-26 at 14 52 57" src="https://github.com/user-attachments/assets/363a69d9-e347-4ed5-bc5a-86f19c01aa17" />
+
+
+
