@@ -31,6 +31,7 @@ public class MoonPhaseCalculatorBasic implements MoonPhaseCalculator {
             } else if (isSpanPhase(i, date)) {
                 return MoonTransition.values()[phaseIndx];
             }
+            // what if it is neither? This can never happen
         }
         return null;
     }

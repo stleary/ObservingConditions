@@ -29,6 +29,7 @@ class MoonPhaseCalculatorBasicTest {
         assertEquals(MoonTransition.WANING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 10, 2)));
         assertEquals(MoonQuarter.LAST_QUARTER, calculator.getMoonPhase(LocalDate.of(2026, 10, 3)));
         assertEquals(MoonTransition.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 10, 7)));
+        assertEquals(MoonQuarter.LAST_QUARTER, calculator.getMoonPhase(LocalDate.of(2027, 3, 30)));
     }
 }
 
