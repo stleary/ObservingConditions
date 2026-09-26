@@ -13,7 +13,7 @@ public interface MoonPhaseCalculator {
      * @return true if new moon, otherwise false
      */
     default boolean isNewMoon(LocalDate date) {
-        return MoonPhase.NEW_MOON == getMoonPhase(date);
+        return MoonQuarter.NEW_MOON == getMoonPhase(date);
     }
     /**
      * Determine the phase of the moon on the given date

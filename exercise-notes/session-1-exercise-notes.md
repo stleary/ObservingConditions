@@ -72,7 +72,7 @@ Let the IDE stub the class and method. Just throw an exception from the method. 
 **Pull some New Moon dates from the US Naval Observatory:**  
 [https://aa.usno.navy.mil/data/MoonPhases](https://aa.usno.navy.mil/data/MoonPhases)
 
-Bring over dates from 2026 and 2027\. For example,  
+Bring over dates from 2026 and 2027. For example,  
 **year	month	day**  
 2026	9	10
 
@@ -101,7 +101,7 @@ public class MoonPhaseCalculatorBasic extends MoonPhaseCalculator {
         "2027-04-05", "2027-05-05", "2027-06-03", "2027-07-03", "2027-08-01",   
         "2027-08-31", "2027-09-30", "2027-10-30", "2027-11-28", "2027-12-28"  
     };   
-    private static final List\<String\> newMoonDates2026And2027 \= List.of(newMoonDates);
+    private static final List<String> newMoonDates2026And2027 = List.of(newMoonDates);
 
     @Override
     public boolean isNewMoon(LocalDate date) {
