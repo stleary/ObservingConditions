@@ -25,31 +25,11 @@ public class MoonPhaseCalculatorBasic implements MoonPhaseCalculator {
         date.isAfter(LocalDate.parse(moonPhases[moonPhases.length-1]))) {
             return null;
         }
-
-        for (int i = 0; i < moonPhases.length; i += 4) {
-            // check first column (new moon)
+        for (int i = 0, phaseIndx = 0; i < moonPhases.length; ++i, phaseIndx=(phaseIndx+2)%8) {
             if (date.isEqual(LocalDate.parse(moonPhases[i]))) {
-                return MoonPhase.NEW_MOON;
+                return MoonPhase.values()[phaseIndx];
             } else if (isSpanPhase(i, date)) {
-                return MoonPhase.WAXING_CRESCENT;
-            }
-            // check second column (first quarter)
-            if (date.isEqual(LocalDate.parse(moonPhases[i+1]))) {
-                return MoonPhase.FIRST_QUARTER;
-            } else if (isSpanPhase(i+1, date)) {
-                return MoonPhase.WAXING_GIBBOUS;
-            }
-            // check 3rd column (full)
-            if (date.isEqual(LocalDate.parse(moonPhases[i+2]))) {
-                return MoonPhase.FULL_MOON;
-            } else if (isSpanPhase(i+2, date)) {
-                return MoonPhase.WANING_GIBBOUS;
-            }
-            // check 4th column (last quarter)
-            if (date.isEqual(LocalDate.parse(moonPhases[i+3]))) {
-                return MoonPhase.LAST_QUARTER;
-            } else if (isSpanPhase(i+3, date)) {
-                return MoonPhase.WANING_CRESCENT;
+                return MoonPhase.values()[phaseIndx+1];
             }
         }
         return null;
