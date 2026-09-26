@@ -25,11 +25,11 @@ public class MoonPhaseCalculatorBasic implements MoonPhaseCalculator {
         date.isAfter(LocalDate.parse(moonPhases[moonPhases.length-1]))) {
             return null;
         }
-        for (int i = 0, phaseIndx = 0; i < moonPhases.length; ++i, phaseIndx=(phaseIndx+2)%8) {
+        for (int i = 0, phaseIndx = 0; i < moonPhases.length; ++i, phaseIndx=(phaseIndx+1)%4) {
             if (date.isEqual(LocalDate.parse(moonPhases[i]))) {
-                return MoonPhase.values()[phaseIndx];
+                return MoonQuarter.values()[phaseIndx];
             } else if (isSpanPhase(i, date)) {
-                return MoonPhase.values()[phaseIndx+1];
+                return MoonTransition.values()[phaseIndx];
             }
         }
         return null;
