@@ -21,15 +21,15 @@ class MoonPhaseCalculatorTest {
         MoonPhaseCalculator calculator = new MoonPhaseCalculatorSelenium();
         // assertNull(calculator.getMoonPhase(LocalDate.of(2026, 1, 1)));
         // assertNull(calculator.getMoonPhase(LocalDate.of(2028, 1, 1)));
-        assertEquals(MoonTransition.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 9, 10)));
-        assertEquals(MoonTransition.WAXING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 9, 12)));
-        assertEquals(MoonTransition.WAXING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 9, 18)));
-        assertEquals(MoonTransition.WAXING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 9, 21)));
-        assertEquals(MoonQuarter.FULL_MOON, calculator.getMoonPhase(LocalDate.of(2026, 9, 26)));
-        assertEquals(MoonTransition.WANING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 10, 2)));
-        assertEquals(MoonTransition.WANING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 10, 3)));
-        assertEquals(MoonTransition.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 10, 7)));
-        assertEquals(MoonTransition.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2027, 3, 30)));
+        assertEquals(MoonPhase.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 9, 10)));
+        assertEquals(MoonPhase.WAXING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 9, 12)));
+        assertEquals(MoonPhase.WAXING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 9, 18)));
+        assertEquals(MoonPhase.WAXING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 9, 21)));
+        assertEquals(MoonPhase.FULL_MOON, calculator.getMoonPhase(LocalDate.of(2026, 9, 26)));
+        assertEquals(MoonPhase.WANING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 10, 2)));
+        assertEquals(MoonPhase.WANING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 10, 3)));
+        assertEquals(MoonPhase.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 10, 7)));
+        assertEquals(MoonPhase.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2027, 3, 30)));
     }
 }
 

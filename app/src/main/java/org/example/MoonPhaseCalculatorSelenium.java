@@ -50,19 +50,13 @@ public class MoonPhaseCalculatorSelenium implements MoonPhaseCalculator {
             String resultStr = resultWebElement.getText();
 
 
-            MoonQuarter[] moonQuarters = MoonQuarter.values();
-            for (MoonQuarter moonQuarter : moonQuarters) {
-                if (resultStr.contains(moonQuarter.getName())) {
-                    return moonQuarter;
+            MoonPhase[] moonPhases = MoonPhase.values();
+            for (MoonPhase moonPhase : moonPhases) {
+                if (resultStr.contains(moonPhase.getName())) {
+                    return moonPhase;
                 }
             }
 
-            MoonTransition[] moonTransitions = MoonTransition.values();
-            for (MoonTransition moonTransition : moonTransitions) {
-                if (resultStr.contains(moonTransition.getName())) {
-                    return moonTransition;
-                }
-            }
         } catch (Exception e) {
             // don't care
         } finally {

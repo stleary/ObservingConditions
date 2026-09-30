@@ -1,5 +1,21 @@
 package org.example;
 
-public interface MoonPhase {
-    public String getName();
+public enum MoonPhase {
+    NEW_MOON("New Moon"),
+    WAXING_CRESCENT("Waxing Crescent"),
+    FIRST_QUARTER("First Quarter"),
+    WAXING_GIBBOUS("Waxing Gibbous"),
+    FULL_MOON("Full Moon"),
+    WANING_GIBBOUS("Waning Gibbous"),
+    LAST_QUARTER("Last Quarter"),
+    WANING_CRESCENT("Waning Crescent");
+
+    private final String name;
+
+    MoonPhase(String name) {
+        this.name = name;
+    }
+    public String getName() {
+        return name;
+    }
 }
