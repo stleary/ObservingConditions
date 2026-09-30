@@ -21,15 +21,15 @@ class MoonPhaseCalculatorTest {
         MoonPhaseCalculator calculator = new MoonPhaseCalculatorSelenium();
         // assertNull(calculator.getMoonPhase(LocalDate.of(2026, 1, 1)));
         // assertNull(calculator.getMoonPhase(LocalDate.of(2028, 1, 1)));
-        assertEquals(MoonPhase.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 9, 10)));
-        assertEquals(MoonPhase.WAXING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 9, 12)));
-        assertEquals(MoonPhase.WAXING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 9, 18)));
-        assertEquals(MoonPhase.WAXING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 9, 21)));
-        assertEquals(MoonPhase.FULL_MOON, calculator.getMoonPhase(LocalDate.of(2026, 9, 26)));
-        assertEquals(MoonPhase.WANING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 10, 2)));
-        assertEquals(MoonPhase.WANING_GIBBOUS, calculator.getMoonPhase(LocalDate.of(2026, 10, 3)));
-        assertEquals(MoonPhase.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2026, 10, 7)));
-        assertEquals(MoonPhase.WANING_CRESCENT, calculator.getMoonPhase(LocalDate.of(2027, 3, 30)));
+        assertEquals("Waning Crescent", calculator.getMoonPhase(LocalDate.of(2026, 9, 10)));
+        assertEquals("Waxing Crescent", calculator.getMoonPhase(LocalDate.of(2026, 9, 12)));
+        assertEquals("Waxing Crescent", calculator.getMoonPhase(LocalDate.of(2026, 9, 18)));
+        assertEquals("Waxing Gibbous", calculator.getMoonPhase(LocalDate.of(2026, 9, 21)));
+        assertEquals("Full Moon", calculator.getMoonPhase(LocalDate.of(2026, 9, 26)));
+        assertEquals("Waning Gibbous", calculator.getMoonPhase(LocalDate.of(2026, 10, 2)));
+        assertEquals("Waning Gibbous", calculator.getMoonPhase(LocalDate.of(2026, 10, 3)));
+        assertEquals("Waning Crescent", calculator.getMoonPhase(LocalDate.of(2026, 10, 7)));
+        assertEquals("Waning Crescent", calculator.getMoonPhase(LocalDate.of(2027, 3, 30)));
     }
 }
 

@@ -19,8 +19,11 @@ import java.util.List;
  */
 public class MoonPhaseCalculatorSelenium implements MoonPhaseCalculator {
 
-    @Override
-    public MoonPhase getMoonPhase(LocalDate date) {
+
+
+
+@Override
+    public String getMoonPhase(LocalDate date) {
         WebDriver webDriver = null;
         try {
             ChromeOptions options = new ChromeOptions();
@@ -50,10 +53,10 @@ public class MoonPhaseCalculatorSelenium implements MoonPhaseCalculator {
             String resultStr = resultWebElement.getText();
 
 
-            MoonPhase[] moonPhases = MoonPhase.values();
-            for (MoonPhase moonPhase : moonPhases) {
-                if (resultStr.contains(moonPhase.getName())) {
-                    return moonPhase;
+
+            for (String moonPhaseString : moonPhaseStrings) {
+                if (resultStr.contains(moonPhaseString)) {
+                    return moonPhaseString;
                 }
             }
 

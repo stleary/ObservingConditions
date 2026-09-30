@@ -19,7 +19,7 @@ public class MoonPhaseCalculatorBasic implements MoonPhaseCalculator {
     };
 
     @Override
-    public MoonPhase getMoonPhase(LocalDate date) {
+    public String getMoonPhase(LocalDate date) {
         // if date is out of range of our table, just return null
         if (date.isBefore(LocalDate.parse(moonPhases[0])) ||
         date.isAfter(LocalDate.parse(moonPhases[moonPhases.length-1]))) {
@@ -27,9 +27,9 @@ public class MoonPhaseCalculatorBasic implements MoonPhaseCalculator {
         }
         for (int i = 0, phaseIndx = 0; i < moonPhases.length; i += 2, phaseIndx=(phaseIndx+1)%4) {
             if (date.isEqual(LocalDate.parse(moonPhases[i]))) {
-                return MoonPhase.values()[phaseIndx];
+                return moonPhaseStrings[phaseIndx];
             } else if (isSpanPhase(i, date)) {
-                return MoonPhase.values()[phaseIndx];
+                return moonPhaseStrings[phaseIndx];
             }
             // what if it is neither? This can never happen
         }
