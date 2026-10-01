@@ -192,43 +192,37 @@ public enum MoonPhase {
     WANING_CRESCENT;  
 }
 ```
-**Some things to notice about the enum:**
 
-- **An enum is not just a list of names.** It can hold fields, take constructor arguments, and define methods. Most of the logic that would otherwise end up in a `switch` statement belongs here instead, next to the data it describes.  
-- **`values()` is called once and cached.** It returns a fresh copy of the array every time it's called, a defensive copy, so callers can't modify the enum's internals. Calling it inside `next()` would allocate a new array on every lookup.  
-- **`next()` depends on declaration order.** That's usually a smell: reordering the constants would silently change behaviour. It's acceptable *here* because the order isn't arbitrary, it's the order the moon actually goes in, and the Javadoc says so. Be suspicious when you see `ordinal()` anywhere else.  
-- **Why a `boolean` field rather than checking `ordinal() % 2 == 0`?** The mod check may fail if we add more values later.
 
 ---
 
 ## Step 3 Update MoonPhaseCalculator
 
 ```  
-package org.example;
-
-import java.time.LocalDate;
-
-public interface MoonPhaseCalculator {  
-    /**  
-    * Gets the phase of the moon on the specified date  
-    */  
+public interface MoonPhaseCalculator {
+    /**
+     * Legacy method to determine if the given date falls on a new moon
+     * @param date the date to check
+     * @return true if new moon, otherwise false
+     */
+    default boolean isNewMoon(LocalDate date) {
+        return MoonPhase.NEW_MOON == getMoonPhase(date);
+    }
+    /**
+     * Determine the phase of the moon on the given date
+     * @param date the date to check
+     * @return the MoonPhase corresponding to the date
+     */
     MoonPhase getMoonPhase(LocalDate date);
-
-    /**  
-     * Checks if the moon's phase is NEW on the given date.  
-     */  
-    default boolean isNewMoon(LocalDate date) {  
-        return getMoonPhase(date) == Phase.NEW;  
-    }  
-}  
+} 
 ```
 
 **Some things to notice:**
 
-- **There is now exactly one source of truth.** `isNewMoon()` can't disagree with `getPhase()`, because it asks `getPhase()`. Any implementation added later gets a correct `isNewMoon()` for free, without writing a line.  
+- **There is now exactly one source of truth.** `isNewMoon()` can't disagree with `getPhase()`, because it asks `getPhase()`. Any implementation added later gets a correct `isNewMoon()`.  
 - **Using `default` in an interface method.** A default interface method contains code. You can override it in a derived class, or leave it in place.  
 - **Adding `getMoonPhase()` to the interface breaks every derived class.** You will need to add this to MoonPhaseCalculatorBasic..  
-- **Last session's test still passes, untouched.** You changed the internals of `isNewMoon()` and a test you wrote a week ago confirmed you didn't break it — without your having to re-read it. That is the main reason for writing tests, to check for regressions.
+- **Last session's test still passes, untouched.** You changed the internals of `isNewMoon()` and a test you wrote a week ago confirmed you didn't break it. That is the main reason for writing tests, to check for regressions.
 
 ---
 
@@ -248,7 +242,7 @@ Write a second one for a principal phase itself — the new moon date — assert
 
 ### The data
 
-The table holds only the four principal phases. Every other day is worked out from them.
+The table holds all 8 of the phases. Every day calculation is worked out from them.
 
 Source: [https://aa.usno.navy.mil/data/MoonPhases](https://aa.usno.navy.mil/data/MoonPhases)
 
@@ -274,51 +268,37 @@ Source: [https://aa.usno.navy.mil/data/MoonPhases](https://aa.usno.navy.mil/data
 
 ## Step 5 Make the test pass
 
-The question `getPhase()` has to answer is: **what was the most recent principal phase on or before this date?** If that date *is* the given date, the answer is that phase. Otherwise, the answer is the phase that follows it.
+In `getPhase()`, first exclude all dates outside of the range of the table. You can use `localDate.isBefore()` and
+`localDate.isAfter()` for this.
 
-Write it as a loop first. Walk the list, remembering the last event that isn't after the target date, and stop once you've gone past:
+Next, write a loop that compares the date parameter to every value in the table of moonPhases until a match is found.
+If the date matches a table entry, the answer is that phase. 
+Otherwise, check whether the date falls between the current table date and the next table date. 
+If that happens, the answer is the corresponding transitional phase.
+Because you already checked for dates outside the table range, you are guaranteed to find a match.
 
 ```  
-   @Override  
-    public MoonPhase getMoonPhase(LocalDate date) {  
-        // if date is out of range of our table, just return null  
-        if (date.isBefore(LocalDate.parse(moonPhases[0[)) ||  
-        date.isAfter(LocalDate.parse(moonPhases[moonPhases.length-1[))) {  
-            return null;  
+    @Override
+    public MoonPhase getMoonPhase(LocalDate date) {
+        // if date is out of range of our table, just return null
+        if (date.isBefore(LocalDate.parse(moonPhases[0])) ||
+        date.isAfter(LocalDate.parse(moonPhases[moonPhases.length-1]))) {
+            return null;
         }
-
-        for (int i = 0; i < moonPhases.length; i += 4) {  
-            // check first column (new moon)  
-            if (date.isEqual(LocalDate.parse(moonPhases[i[))) {  
-                return MoonPhase.NEW_MOON;  
-            } else if (isSpanPhase(i, date)) {  
-                return MoonPhase.WAXING_CRESCENT;  
-            }  
-            // check second column (first quarter)  
-            if (date.isEqual(LocalDate.parse(moonPhases[i+1[))) {  
-                return MoonPhase.FIRST_QUARTER;  
-            } else if (isSpanPhase(i+1, date)) {  
-                return MoonPhase.WAXING_GIBBOUS;  
-            }  
-            // check 3rd column (full)  
-            if (date.isEqual(LocalDate.parse(moonPhases[i+2[))) {  
-                return MoonPhase.FULL_MOON;  
-            } else if (isSpanPhase(i+2, date)) {  
-                return MoonPhase.WANING_GIBBOUS;  
-            }  
-            // check 4th column (last quarter)  
-            if (date.isEqual(LocalDate.parse(moonPhases[i+3[))) {  
-                return MoonPhase.LAST_QUARTER;  
-            } else if (isSpanPhase(i+3, date)) {  
-                return MoonPhase.WANING_CRESCENT;  
-            }  
-        }  
-        return null;  
+        for (int i = 0, phaseIndx = 0; i < moonPhases.length; i += 2, phaseIndx=(phaseIndx+1)%4) {
+            if (date.isEqual(LocalDate.parse(moonPhases[i]))) {
+                return MoonPhase.values()[phaseIndx];
+            } else if (isSpanPhase(i, date)) {
+                return MoonPhase.values()[phaseIndx];
+            }
+            // what if it is neither? This can never happen
+        }
+        return null;
     }
 
-    private boolean isSpanPhase(int i, LocalDate date) {  
-        return date.isAfter(LocalDate.parse(moonPhases[i[)) &&  
-                date.isBefore(LocalDate.parse(moonPhases[i+1[));  
+    private boolean isSpanPhase(int i, LocalDate date) {
+        return date.isAfter(LocalDate.parse(moonPhases[i])) &&
+                date.isBefore(LocalDate.parse(moonPhases[i+1]));
     }
 
 ```
