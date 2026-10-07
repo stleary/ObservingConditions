@@ -1,15 +1,14 @@
-# Session 4 Replace Selenium with a REST API
+# Session 3 Replace Selenium with a REST API
 
 **Goal of this lesson:** add a new calculator, `MoonPhaseCalculatorRest`, that gets the moon phase from the US Naval Observatory REST API instead of driving a web browser. We will use the JSON-java library to read the response. Since REST and JSON may be new for you, we will spend a little extra time on them.
 
-**Not a goal:** a Spring server. That comes in a future lesson. Time zones and clock times are also out of scope for this course.
 
 ---
 
 ## Warm up
 
 Run `./gradlew test` and confirm no errors before changing anything.
-Notice how long it takes. The Selenium test starts Chrome nine times, once for every assertion. Write the time down. We will compare it at the end of the lesson.
+Notice how long it takes. The Selenium test starts Chrome nine times, once for every assertion. 
 
 ---
 
@@ -19,7 +18,7 @@ Paste this into your browser:
 
 [https://aa.usno.navy.mil/api/rstt/oneday?date=2026-09-27&coords=0,0](https://aa.usno.navy.mil/api/rstt/oneday?date=2026-09-27&coords=0,0)
 
-This is the same observatory, and the same data, that the Selenium calculator reads. The difference is who it is written for. The web page is for people. The API is for programs. A REST API is a web address that returns data instead of a page.
+This is the same observatory, and the similar data, that the Selenium calculator reads. The difference is who it is written for. The web page is for people. The API is for programs. Think of a REST API as a web address that returns data instead of a page.
 
 **The parts of the URL:**
 
@@ -72,9 +71,9 @@ The response is JSON, a text format for structured data. Here is a shortened cop
 
 JSON has only a few rules:
 
-* **An object** is wrapped in `{ }` and holds name/value pairs. The name is always a string in double quotes. This is like a Java `Map`.  
+* **An object** is wrapped in `{ }` and holds key/value pairs. The key is always a string in double quotes. This is like a Java `Map`.  
 * **An array** is wrapped in `[ ]` and holds a list of values. This is like a Java `List`.  
-* **A value** can be a string (`"Full Moon"`), a number (`27`), a boolean (`false`), `null`, an object, or an array.  
+* **A value** can be a string (`"Full Moon"`), a number (`42`), a boolean (`false`), `null`, an object, or an array.  
 * Objects and arrays can be nested inside each other, as deep as you like.
 
 **Find the value we want.** It is `curphase`, the current phase. To reach it, start at the outer object and work inward:
@@ -108,12 +107,12 @@ Run `./gradlew build` to download it.
 
 ## Step 4 Understanding JSON-java
 
-JSON-java has two main classes. `JSONObject` holds a JSON object, and `JSONArray` holds a JSON array. You create one from a string, and then ask it for values by name.
+JSON-java has two main classes. `JSONObject` holds a JSON object, and `JSONArray` holds a JSON array. You create one from some text, and then ask it for values by name.
 
 Here is a small example, not related to the Moon:
 
 ```
-String json = """
+String jsonText = """
     {
       "orderId": 1234,
       "status": "SHIPPED",
@@ -126,7 +125,7 @@ String json = """
     }
     """;
 
-JSONObject order = new JSONObject(json);
+JSONObject order = new JSONObject(jsonText);
 
 int orderId = order.getInt("orderId");                 // 1234
 String status = order.getString("status");             // "SHIPPED"
@@ -145,7 +144,7 @@ The `"""` is a Java text block. It lets you write a string across several lines,
 
 | Method | What it does | Example Result |
 |----|----|----|
-| new JSONObject(String) | Parses JSON text into an object | new JSONObject(json) |
+| new JSONObject(String) | Parses JSON text into an object | new JSONObject(jsonText) |
 | getString(name) | Returns a string value | order.getString("status") returns "SHIPPED" |
 | getInt(name) | Returns a number value as an int | order.getInt("orderId") returns 1234 |
 | getBoolean(name) | Returns a boolean value | order.getBoolean("gift") returns false |
@@ -246,7 +245,7 @@ Run the test. It should pass.
 
 - **No `public` or `private` on the method.** This is package-private. Any class in the `org.example` package can call it, including the test. Nothing outside the package can.  
 - **Compare this to the Selenium version.** There the phase was buried in a sentence on a web page, found with the CSS selector `h4 + p + p`. If the observatory redesigns the page, that selector breaks. Here we ask for the value by name.  
-- **Try it:** change `"curphase"` to `"curPhase"` in the code and run the test. Read the error message, then change it back.
+
 
 ---
 
@@ -331,7 +330,7 @@ Run the tests. Both should pass.
 - **The timeout.** `send()` waits until the server answers. Without a timeout, a server that never answers means a program that never finishes.  
 - **`throws Exception`.** `send()` can throw checked exceptions, such as `IOException`. `fetchJson()` passes them up, and `getMoonPhase()` catches them in one place.  
 - **Returning `null` when something goes wrong.** This is the same thing the Selenium calculator does. The caller can't tell the difference between "the site is down" and "we don't know this phase". That is not good enough for a real service, and we will come back to it.  
-- **Two small methods instead of one big one.** One gets the text and one reads it. That split is what let us test the parsing without the network.
+- **Two small methods instead of one big one.** One gets the text and one reads it. This is good design because one method should only do one thing. Also, that split is what let us test the parsing without the network.
 
 ---
 
