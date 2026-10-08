@@ -34,17 +34,17 @@ public class MoonPhaseCalculatorSelenium implements MoonPhaseCalculator {
             WebElement name = webDriver.findElement(By.cssSelector("input#date"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/YYYY");
             String formattedDate = date.format(formatter);
-            name.sendKeys(formattedDate + Keys.TAB);
+            name.sendKeys(formattedDate);
 
             WebElement submit = webDriver.findElement(By.cssSelector("input#submit"));
             submit.click();
 
             // wait for the next page
-            //        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-            //        WebElement waitElement = wait.until(
-            //                ExpectedConditions.visibilityOfElementLocated(By.cssSelector("nav.site-nav-secondary"))
-            //        );
-            Thread.sleep(1000);
+            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+            WebElement waitElement = wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.cssSelector("h4 + p + p"))
+            );
+            // Thread.sleep(1000);
 
             WebElement resultWebElement = webDriver.findElement(By.cssSelector("h4 + p + p"));
             String resultStr = resultWebElement.getText();
