@@ -6,7 +6,7 @@ import java.time.LocalDate;
 /**
  * Calculates phases of the moon for a given date.
  */
-public interface MoonPhaseCalculator {
+interface MoonPhaseCalculator {
     /**
      * Legacy method to determine if the given date falls on a new moon
      * @param date the date to check
@@ -21,4 +21,8 @@ public interface MoonPhaseCalculator {
      * @return the MoonPhase corresponding to the date
      */
     MoonPhase getMoonPhase(LocalDate date);
+
+    default MoonPhase parseMoonPhase(String sampleResponse) {
+        return null;
+    }
 }

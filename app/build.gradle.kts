@@ -21,6 +21,9 @@ dependencies {
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+    // JSON-Java library
+    implementation("org.json:json:20240303");
+
     // Selenium Java library
     implementation("org.seleniumhq.selenium:selenium-java:4.25.0")
 

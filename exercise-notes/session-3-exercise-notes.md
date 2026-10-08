@@ -200,7 +200,7 @@ class MoonPhaseCalculatorRestTest {
 
     @Test
     void parsesCurphaseFromResponse() {
-        MoonPhaseCalculatorRest calculator = new MoonPhaseCalculatorRest();
+        MoonPhaseCalculator calculator = new MoonPhaseCalculatorRest();
         assertEquals(MoonPhase.WANING_GIBBOUS, calculator.parseMoonPhase(SAMPLE_RESPONSE));
     }
 }
